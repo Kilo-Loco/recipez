@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class CreateRecipeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateRecipeVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var recipeTitle: UITextField!
     @IBOutlet weak var recipeIngredients: UITextField!
@@ -26,6 +26,20 @@ class CreateRecipeVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.imagePicker.delegate = self
         self.recipeImg.layer.cornerRadius = 4.0
         self.recipeImg.clipsToBounds = true
+        self.recipeTitle.delegate = self
+        self.recipeIngredients.delegate = self
+        self.recipeSteps.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.recipeTitle.resignFirstResponder()
+        self.recipeIngredients.resignFirstResponder()
+        self.recipeSteps.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
@@ -60,4 +74,5 @@ class CreateRecipeVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.navigationController?.popViewControllerAnimated(true)
         }
     }
+    
 }
